@@ -10,6 +10,7 @@ function Content() {
 
   const Comparacion = (e, texto) => {
     e.preventDefault();
+    const lonString = texto.length;
     const vocales = ["a", "e", "i", "o", "u"];
     const excepciones = ["m", "n", "r"];
     //const letraAnterior = "";
