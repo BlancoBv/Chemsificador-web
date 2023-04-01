@@ -10,11 +10,19 @@ function Content() {
 
   const Comparacion = (e, texto) => {
     e.preventDefault();
-    const lonString = texto.length;
-    const vocales = ["a", "e", "i", "o", "u"];
-    const excepciones = ["m", "n", "r"];
-    //const letraAnterior = "";
-    const nuevaCadena = texto;
+    const longitudString = texto.length;
+    /* Ciclo que recorre la lista */
+    for (let i = 0; i < longitudString; i++) {
+      const element = texto[i];
+      console.log(element);
+    }
+    console.log(longitudString);
+    const vocales = new RegExp("^[aeiou]$", "gi");
+
+    const excepciones = new RegExp("^[mnr]$", "gi");
+    console.log(excepciones.test("a"));
+
+    const nuevaCadena = [];
     setResultado(nuevaCadena);
   };
   return (
