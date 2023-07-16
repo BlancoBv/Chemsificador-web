@@ -1,0 +1,30 @@
+.text-globe {
+  bottom: 90%;
+  right: 70%;
+  position: absolute;
+  background-color: aqua;
+  height: 200px;
+  width: 200px;
+  clip-path: polygon(
+    0% 0%,
+    100% 0%,
+    100% 75%,
+    75% 75%,
+    75% 100%,
+    50% 75%,
+    0% 75%
+  );
+}
+.text-globe textarea {
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+}
+
+.response-container {
+  position: relative;
+  z-index: 3;
+}
+.response-container img {
+  width: 350px;
+}
