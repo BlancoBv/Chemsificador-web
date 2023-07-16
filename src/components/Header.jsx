@@ -15,9 +15,18 @@ function Header() {
         <img src={cheems} className="img-fluid" width="50px" />
       </div>
       {/* Links */}
-      <Link to="about" className="about-button">
-        <i class="fa-solid fa-circle-info fs-3" />
-      </Link>
+      <div className="about-button d-flex">
+        <div className="d-flex align-items-center me-5">
+          <i class="fa-solid fa-sun me-2" />
+          <div className="form-check  form-switch d-flex">
+            <input type="checkbox" className="form-check-input" role="switch" />
+          </div>
+          <i class="fa-solid fa-moon" />
+        </div>
+        <Link to="about">
+          <i class="fa-solid fa-circle-info fs-3" />
+        </Link>
+      </div>
     </div>
   );
 }
