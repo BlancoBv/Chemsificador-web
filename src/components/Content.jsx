@@ -8,22 +8,52 @@ function Content() {
     setTexto(e.target.value);
   };
 
-  const Comparacion = (e, texto) => {
+  const comparacion = (e, texto) => {
     e.preventDefault();
-    const longitudString = texto.length;
-    const vocales = new RegExp("^[aeiou]$", "gi");
-    const excepciones = new RegExp("^[mnr]$", "gi");
-    /* Ciclo que recorre la lista */
-    for (let i = 0; i < longitudString; i++) {
-      const stringActual = texto[i];
-      const stringPosterior = texto[i + 1];
-      if (vocales.test(stringActual)) {
-      }
 
-      const nuevaCadena = [];
-      setResultado(nuevaCadena);
+    let nuevaCadena = [];
+    const vocales = new RegExp("^[aeiou]$", "i");
+    const excepciones = new RegExp("^[mnr]$", "i");
+    /* Ciclo que recorre la lista */
+
+    for (let i = 0; i < texto.length; i++) {
+      const letraAnterior = texto[i];
+      const letraNext = texto[i + 1];
+
+      if (vocales.test(letraAnterior)) {
+        if (vocales.test(letraNext) || excepciones.test(letraNext)) {
+          nuevaCadena.push(letraAnterior, letraNext);
+        } else {
+          nuevaCadena.push(letraAnterior, "m", letraNext);
+        }
+      } else {
+        nuevaCadena.push(letraAnterior, letraNext);
+      }
     }
+    const eDeletes = () => {
+      return texto.length - 2;
+    };
+    return [nuevaCadena, eDeletes()];
   };
+
+  const limpiar = (e, texto) => {
+    let [cadena, numDeletes] = comparacion(e, texto);
+    let contadorDeletes = 0;
+
+    for (let i = 0; i < cadena.length; i++) {
+      const element = cadena[i];
+      if (cadena[i] === cadena[i + 1]) {
+        cadena.splice(i, 1, "");
+        contadorDeletes += contadorDeletes;
+
+        if (contadorDeletes === numDeletes) {
+          break;
+        }
+      }
+    }
+    setResultado(cadena.join(""));
+  };
+
   return (
     <div
       className="d-flex flex-column align-items-center justify-content-center container-fluid"
@@ -31,7 +61,7 @@ function Content() {
     >
       {/* Formulario */}
       <div className=" mt-3 mb-3">
-        <form onSubmit={(e) => Comparacion(e, texto)}>
+        <form onSubmit={(e) => limpiar(e, texto)}>
           <div>
             <label className="form-label">Texto a chemsificar </label>
             <textarea className="form-control" onChange={handleTexto} />
