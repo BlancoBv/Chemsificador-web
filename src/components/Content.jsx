@@ -4,10 +4,16 @@ import TextGlobe from "./TextGlobe";
 function Content() {
   const [texto, setTexto] = useState(null);
   const [resultado, setResultado] = useState(" ");
-  const [showGlobe, setShowGlobe] = useState({ status: false, msg: "" });
+  const [showGlobe, setShowGlobe] = useState({ status: false, error: false });
 
   const handleTexto = (e) => {
-    setTexto(e.target.value);
+    const valor = e.target.value;
+    const regExp = new RegExp(/^.+/, "gi");
+    if (regExp.test(valor)) {
+      setTexto(valor);
+    } else {
+      setTexto(null);
+    }
   };
 
   const comparacion = (e, texto) => {
@@ -54,34 +60,43 @@ function Content() {
         }
       }
       setResultado(cadena.join(""));
-      setShowGlobe({ status: true, msg: resultado });
+      setShowGlobe({ status: true, error: false });
     } catch (error) {
-      console.log(error);
+      setShowGlobe({ status: true, error: true });
+      setResultado("Intenta ingresar un texto primero que nada...");
+      setTimeout(() => {
+        setShowGlobe({ status: false, error: false });
+      }, 2000);
     }
   };
 
   return (
-    <div
-      className="d-flex flex-column align-items-center justify-content-center container-fluid position-relative"
-      style={{ minHeight: "80vh", overflow: "hidden" }}
-    >
+    <div className="d-flex flex-column align-items-center justify-content-center container-fluid position-relative overflow-hidden h-90">
       {/* Formulario */}
       <TextGlobe
         show={showGlobe.status}
         text={resultado}
-        close={() => setShowGlobe({ status: false })}
+        close={() => setShowGlobe({ status: false, error: false })}
+        error={showGlobe.error}
       />
-      <div className=" mt-3 mb-3">
-        <form onSubmit={(e) => limpiar(e, texto)}>
-          <div>
-            <label className="form-label">Texto a chemsificar </label>
-            <textarea className="form-control" onChange={handleTexto} />
-          </div>
-          <button type="submit" className="btn btn-primary mt-3 ">
-            ¡Cheemsificar!
-          </button>
-        </form>
-      </div>
+
+      <form
+        className="form-container translate-middle d-flex flex-column align-items-center"
+        onSubmit={(e) => limpiar(e, texto)}
+      >
+        <div>
+          <label className="form-label ">Texto a chemsificar </label>
+          <textarea
+            rows="10"
+            className="form-control resize-none"
+            onChange={handleTexto}
+          />
+        </div>
+        <button type="submit" className="btn btn-primary mt-3 ">
+          ¡Cheemsificar! {document.body.clientWidth}
+        </button>
+      </form>
+
       {/*   <div>
         <label className="form-label">Resultado</label>
         <textarea className="form-control" value={resultado} readOnly />

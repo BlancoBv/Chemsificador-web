@@ -1,13 +1,29 @@
 import React from "react";
 import cheems from "../img/cheems.png";
+import cheemsAngry from "../img/cheems_angry.png";
 import { useTransition, animated } from "@react-spring/web";
-import { createPortal } from "react-dom";
 
-function TextGlobe({ show, text, close }) {
+function TextGlobe({ show, text, close, error }) {
+  console.log(error);
+  const screenWidth = document.body.clientWidth;
+  const MIN_SCREEN_SIZE = 500;
+
   const transition = useTransition(show, {
-    from: { x: 100, y: 500, opacity: 0 },
-    enter: { y: 200, x: 50, opacity: 1 },
-    leave: { opacity: 0 },
+    from: {
+      x: screenWidth >= MIN_SCREEN_SIZE ? screenWidth / 3 : 100,
+      y: 500,
+      opacity: 0,
+    },
+    enter: {
+      y: screenWidth >= MIN_SCREEN_SIZE ? 300 : 400,
+      x: screenWidth >= MIN_SCREEN_SIZE ? screenWidth / 3 : 100,
+      opacity: 1,
+    },
+    leave: {
+      x: screenWidth >= MIN_SCREEN_SIZE ? screenWidth / 3 : 100,
+      y: 500,
+      opacity: 0,
+    },
   });
   return (
     <>
@@ -17,10 +33,12 @@ function TextGlobe({ show, text, close }) {
             <animated.div style={style} className="position-absolute">
               <div className="response-container">
                 <div className="text-globe">
-                  <textarea readOnly value={text} />
+                  <textarea className="resize-none" readOnly value={text} />
                 </div>
-                <img src={cheems} width="300px" />
-                <button onClick={close}>cerrar</button>
+                <img src={error ? cheemsAngry : cheems} width="300px" />
+                <div className="response-actions">
+                  <button onClick={close}>cerrar</button>
+                </div>
               </div>
             </animated.div>
           )

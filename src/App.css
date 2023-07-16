@@ -1,6 +1,7 @@
 .text-globe {
-  bottom: 90%;
-  right: 70%;
+  z-index: -1;
+  bottom: 80%;
+  right: 60%;
   position: absolute;
   background-color: aqua;
   height: 200px;
@@ -16,15 +17,55 @@
   );
 }
 .text-globe textarea {
-  height: 100%;
+  height: 75%;
+  width: 100%;
   background-color: rgba(0, 0, 0, 0);
   border: none;
+  margin: 2px;
 }
 
 .response-container {
   position: relative;
-  z-index: 3;
+}
+
+.response-actions {
+  position: absolute;
+  left: 0%;
+  top: 20%;
 }
 .response-container img {
   width: 350px;
+}
+
+.resize-none {
+  resize: none;
+  outline: none;
+}
+.form-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+.about-button {
+  position: absolute;
+  right: 1rem;
+}
+
+@media screen and (max-width: 500px) {
+  .form-container {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+  }
+}
+.h-90 {
+  height: 90%;
+}
+.h-10 {
+  height: 10%;
+}
+.theme{
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
 }
